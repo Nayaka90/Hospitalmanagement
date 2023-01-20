@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite thread-count="1" guice-stage="DEVELOPMENT" name="Failed suite [Suite]" parallel="tests">
+  <test thread-count="1" name="Test(failed)" parallel="tests">
+    <parameter name="Browsers" value="microsoftedge"/>
+    <groups>
+      <run>
+        <include name="smoke"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="admin_module.Admin_Test">
+        <methods>
+          <include name="configBM"/>
+          <include name="configAM"/>
+          <include name="configBC"/>
+          <include name="Manage_doc"/>
+          <include name="ManageUSer"/>
+          <include name="configAS"/>
+          <include name="configAC"/>
+        </methods>
+      </class> <!-- admin_module.Admin_Test -->
+      <class name="Patient_module.Appointment_historyTest">
+        <methods>
+          <include name="appointment_historyTest"/>
+          <include name="configBM"/>
+          <include name="configAM"/>
+          <include name="configBC"/>
+          <include name="configAS"/>
+          <include name="configAC"/>
+        </methods>
+      </class> <!-- Patient_module.Appointment_historyTest -->
+      <class name="Doctor_module.Doc_Test">
+        <methods>
+          <include name="configBM"/>
+          <include name="configAM"/>
+          <include name="configBC"/>
+          <include name="addPatient_mgePatientTest"/>
+          <include name="generateReport"/>
+          <include name="configAS"/>
+          <include name="configAC"/>
+        </methods>
+      </class> <!-- Doctor_module.Doc_Test -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite"  thread-count="1" parallel="tests">
+<listeners>
+<listener class-name="com.hms.generic.ListenerImplementation"/>
+<listener class-name="com.hms.generic.MyAnnotationTransformer"/>
+</listeners>
+
+  <test  name="Test1"  >
+    <parameter name="Browsers" value="microsoftedge"/>
+    <classes>
+ <class name="ContactUS_module.ContactUs_QueriesTest"/>
+      <class name="Patient_module.Appointment_historyTest"/>
+      <class name="Doctor_module.Doc_Test"/>
+      <class name="admin_module.Admin_Test"/>  
+   </classes> 
+  </test> 
+  
+  <test  name="Test2"  >
+    <parameter name="Browsers" value="chrome"/>
+    <classes>
+ <class name="ContactUS_module.ContactUs_QueriesTest"/>
+      <class name="Patient_module.Appointment_historyTest"/>
+      <class name="Doctor_module.Doc_Test"/>
+      <class name="admin_module.Admin_Test"/>  
+   </classes> 
+  </test> <!-- Test --> 
+
+</suite> <!-- Suite -->

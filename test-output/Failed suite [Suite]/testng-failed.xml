@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite thread-count="2" guice-stage="DEVELOPMENT" name="Failed suite [Failed suite [Suite]]" parallel="tests">
+  <test thread-count="2" name="Test2(failed)(failed)" parallel="tests">
+    <parameter name="Browsers" value="microsoftedge"/>
+    <classes>
+      <class name="Doctor_module.Doc_Test">
+        <methods>
+          <include name="configBM"/>
+          <include name="configAM"/>
+          <include name="configBS"/>
+          <include name="configBC"/>
+          <include name="addPatient_mgePatientTest" invocation-numbers="0"/>
+          <include name="generateReport"/>
+          <include name="configAS"/>
+          <include name="configAC"/>
+        </methods>
+      </class> <!-- Doctor_module.Doc_Test -->
+    </classes>
+  </test> <!-- Test2(failed)(failed) -->
+</suite> <!-- Failed suite [Failed suite [Suite]] -->
