@@ -340,5 +340,15 @@ public class WebDriverUtility {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
+	/**
+	 * This method is used to wait untill page opens
+	 * @param driver
+	 * @param title
+	 */
+	
+	public void waitForPageTitle(WebDriver driver, String title) {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.titleContains(title));
+	}
 
 }

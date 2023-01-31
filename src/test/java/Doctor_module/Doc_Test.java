@@ -1,6 +1,7 @@
 package Doctor_module;
 
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -30,33 +31,47 @@ public class Doc_Test extends BaseClass{
 
 			String docmail = eul.getDataFromExcel(Browser,"AddPat_MngPat", 0, 1);
 			String pwd = eul.getDataFromExcel(Browser,"AddPat_MngPat", 1, 1);
-
+			
+			wul.waitForPageTitle(driver, "Home");
 			hp.doctorLoginClick();
+			
+			wul.waitForPageTitle(driver, "Login");
 			dl.doctorLogin(docmail, pwd);
-
+			
+			wul.waitForPageTitle(driver, "Dashboard");
 			dd.clickingOnaddPatietlink();
+			
+			wul.waitForPageTitle(driver, "Add");
 			ap.addPatient(Browser,driver, eul);
 			dd.logoutLink();
+			
+			wul.waitForPageTitle(driver, "Home");
 			hp.adminLoginClick();
+			
+			wul.waitForPageTitle(driver, "Login");
 			String un = ful.getDataFromPropertyFile("username");
 			String password = ful.getDataFromPropertyFile("password");
 			al.adminLogin(un, password);
+			
+			wul.waitForPageTitle(driver, "Dashboard");
 			ad.clickingOnmanagePatient();
-			try {
-				boolean rs = driver.findElement(By.xpath("//td[.='" + eul.getDataFromExcel(Browser,"AddPat_MngPat", 6, 1) + "']"))
-						.isDisplayed();
-				if (rs) {
-					System.out.println("Patient details displayed");
-
-				} else {
-					System.out.println("Patient details not displayed");
-				}
-			} catch (Exception e) {
-				System.out.println("Patient name not Present");
-			}
+			
+			wul.waitForPageTitle(driver, "Manage");
+			boolean rs = driver.findElement(By.xpath("//td[.='" + eul.getDataFromExcel(Browser,"AddPat_MngPat", 6, 1) + "']")).isDisplayed();
+				
+//				if (rs) {
+//					System.out.println("Patient details displayed");
+//
+//				} else {
+//					System.out.println("Patient details not displayed");
+//				}
+			
 			dd.logoutLink();
+			Assert.assertTrue(rs,"Patient details not displayed");
 		}
-	@Parameters("Browsers") 
+	
+	
+	 @Parameters("Browsers") 
 	 @Test(priority = -3,groups= {"smoke","Regression"})
 		public void generateReport(@Optional("chrome")String Browser) throws Throwable {
 			Home_Page hp = new Home_Page(driver);
@@ -70,24 +85,40 @@ public class Doc_Test extends BaseClass{
 
 			String docmail = eul.getDataFromExcel(Browser,"AddPat_MngPat", 0, 1);
 			String pwd = eul.getDataFromExcel(Browser,"AddPat_MngPat", 1, 1);
-
+			
+			wul.waitForPageTitle(driver, "Home");
 			hp.doctorLoginClick();
+			
+			wul.waitForPageTitle(driver, "Login");
 			dl.doctorLogin(docmail, pwd);
+			
+			wul.waitForPageTitle(driver, "Dashboard");
 			dd.clickOnSearhIcon();
+			
+			wul.waitForPageTitle(driver, "Manage");
 			mp.pdatingpatientMedicalHis(Browser,eul);
 			System.out.println(wul.getAlertText(driver));
 			wul.acceptAlert(driver);
 			dd.logoutLink();
+			
+			wul.waitForPageTitle(driver, "Home");
 			hp.patientLoginClick();
+			
+			wul.waitForPageTitle(driver, "Login");
 			pl.patientLogin(Browser,eul);
+			
+			wul.waitForPageTitle(driver, "Dashboard");
 			pd.clickingOnmedHistory();
 			String text = mh.verifyingMedHistory(eul);
-
-			if (text.equals(eul.getDataFromExcel(Browser,"AddPat_MngPat", 13, 1)))
-				System.out.println("Medical history Displayed");
-			else
-				System.out.println("Medical history not Displayed");
+			boolean rs= text.equals(eul.getDataFromExcel(Browser,"AddPat_MngPat", 13, 1));
+			
+//
+//			if (text.equals(eul.getDataFromExcel(Browser,"AddPat_MngPat", 13, 1)))
+//				System.out.println("Medical history Displayed");
+//			else
+//				System.out.println("Medical history not Displayed");
 			pd.logoutLink();
+			Assert.assertTrue(rs,"Medical history not Displayed");
 		}
 	
 

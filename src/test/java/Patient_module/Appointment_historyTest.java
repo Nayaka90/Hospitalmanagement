@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -45,53 +46,79 @@ public class Appointment_historyTest extends BaseClass {
 
 		String un = ful.getDataFromPropertyFile("username");
 		String pwd = ful.getDataFromPropertyFile("password");
+		
+		wul.waitForPageTitle(driver, "Home");
 		hp.adminLoginClick();
+		
+		wul.waitForPageTitle(driver, "Login");
 		al.adminLogin(un, pwd);
+		
+		wul.waitForPageTitle(driver, "Dashboard");
 		ad.clickingOnAddDoctor();
+		
+		wul.waitForPageTitle(driver, "Add");
 		ado.addDoctor(Browser,eul, jul);
 		System.out.println(wul.getAlertText(driver));
 		wul.acceptAlert(driver);
 		String dname = eul.getDataFromExcel(Browser,"AddPat_MngPat", 2, 1);
 		String ns = jul.getSystemDateWithFormat();
+		boolean rs = driver.findElement(By.xpath(" //td[.='" + dname + "']/following-sibling::td[contains(text(),'" + ns + "')] "))
+				.isDisplayed();
+		Assert.assertTrue(rs,"Doctor profile not dispalyed");
 
-		try {
-			boolean rs = driver
-					.findElement(
-							By.xpath(" //td[.='" + dname + "']/following-sibling::td[contains(text(),'" + ns + "')] "))
-					.isDisplayed();
-			if (rs)
-				System.out.println("Doctor profile dispalyed");
-			else
-				System.out.println("Doctor profile not dispalyed");
 
-		} catch (Exception e) {
-			System.out.println("Element not present");
-		}
+//			boolean rs = driver
+//					.findElement(
+//							By.xpath(" //td[.='" + dname + "']/following-sibling::td[contains(text(),'" + ns + "')] "))
+//					.isDisplayed();
+//			if (rs)
+//				System.out.println("Doctor profile dispalyed");
+//			else
+//				System.out.println("Doctor profile not dispalyed");	
 
 		ad.logoutLink();
+		
+		wul.waitForPageTitle(driver, "Home");
 		hp.patientLoginClick();
+		
+		wul.waitForPageTitle(driver, "Login");
 		pl.createacntlink();
+		
+		wul.waitForPageTitle(driver, "Register");
 		pr.patientReg(Browser,eul, jul, driver);
 		System.out.println(wul.getAlertText(driver));
 		wul.acceptAlert(driver);
 		pr.loginlink();
+		
+		wul.waitForPageTitle(driver, "Login");
 		pl.patientLogin(Browser,eul);
+		
+		wul.waitForPageTitle(driver, "Dashboard");
 		pd.clickingOnBookApmt();
 		String d = jul.getSystemDateWithFormat();
 		eul.setDataToExcel(Browser,"Add_Pat", 0, 5, d);
+		
+		wul.waitForPageTitle(driver, "Book");
 		ba.clickingOnBookApmt(Browser,eul);
 		System.out.println(wul.getAlertText(driver));
 		wul.acceptAlert(driver);
 		pd.logoutLink();
+		
+		wul.waitForPageTitle(driver, "Home");
 		hp.adminLoginClick();
+		
+		wul.waitForPageTitle(driver, "Login");
 		al.adminLogin(un, pwd);
+		
+		wul.waitForPageTitle(driver, "Dashboard");
 		ad.clickingOnAptmtHistory();
 		String txt = driver.findElement(By.xpath("//td[.='" + dname + "']/following-sibling::td[6]")).getText();
-		if (txt.contains("Active"))
-			System.out.println("OK");
-		else
-			System.out.println("not ok");
+//		if (txt.contains("Active"))
+//			System.out.println("OK");
+//		else
+//			System.out.println("not ok");
 		ad.logoutLink();
+		Assert.assertTrue(txt.contains("Active"),"not ok");
 	}	
 }
 

@@ -23,7 +23,7 @@ public class ContactUs_QueriesTest extends BaseClass {
 	@Parameters("Browsers")
     @Test(groups= "Regression")
 	public void  contactUs_QueriesTest(@Optional("chrome")String Browser) throws Throwable {
-	String un = ful.getDataFromPropertyFile("username");
+	    String un = ful.getDataFromPropertyFile("username");
 		String pwd = ful.getDataFromPropertyFile("password");
 		Home_Page hp = new Home_Page(driver);
 		ContactUs_Page cp =new ContactUs_Page(driver);
@@ -31,28 +31,38 @@ public class ContactUs_QueriesTest extends BaseClass {
 		Admin_DashBoardPage ad= new Admin_DashBoardPage(driver);
 		Query_DetailsPage qd=new Query_DetailsPage(driver);
 		
+		wul.waitForPageTitle(driver, "Home");
+		Assert.assertTrue(driver.getTitle().contains("Home"),"Homepage is not displayed");
 		hp.ContctusClick();
+		
+		wul.waitForPageTitle(driver, "contact");
+		Assert.assertTrue(driver.getTitle().contains("contact"),"Contactuspage is not displayed");
 		cp.contactusQuery(Browser,eul);
 		System.out.println(wul.getAlertText(driver));
 		wul.acceptAlert(driver);
 		hp.homePageClick();
 		
+		wul.waitForPageTitle(driver, "Home");
 		hp.adminLoginClick();
+		
+		wul.waitForPageTitle(driver, "Login");	
 		al.adminLogin(un, pwd);
-
+		
+		wul.waitForPageTitle(driver, "Dashboard");
 		ad.clickingOnUnReadQuery();
+		
+		wul.waitForPageTitle(driver, "Details");
 		driver.findElement(By.xpath("//td[.='"+eul.getDataFromExcel(Browser,"ContactUs_Queries", 1, 1)+"']/..//a[@title='View Details']")).click();
-		
 		qd.adminRemark(Browser,eul);
-		
 		System.out.println( wul.getAlertText(driver));
 		wul.acceptAlert(driver);
 		boolean rs = driver.findElement(By.xpath("//td[.='"+eul.getDataFromExcel(Browser,"ContactUs_Queries", 1, 1)+"']")).isDisplayed();
-		if (rs) 
-			System.out.println("Updated");
-		else 
-			System.out.println("not updated");
+//		if (rs) 
+//			System.out.println("Updated");
+//		else 
+//			System.out.println("not updated");
 		ad.logoutLink();
+		Assert.assertTrue(rs,"remarks updated");
 
 	}
 
